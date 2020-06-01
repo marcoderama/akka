@@ -54,7 +54,7 @@ to populate the storage with events or simulate failures by using the underlying
 
 ## Persistence TestKit
 
-**Note!** The `PersistenceTestKit` is a new feature, api may have changes breaking source compatibility in future versions.
+**Note!** The `PersistenceTestKit` is a new feature. The api may have changes that break source compatibility in future versions.
 
 Persistence testkit allows to check events saved in a storage, emulate storage operations and exceptions.
 To use the testkit you need to add the following dependency in your project:
@@ -72,7 +72,7 @@ There are two testkit classes which have similar api:
  
 The testkit classes have two corresponding plugins which emulate the behavior of the storages: 
 
- * @apidoc[PersistenceTestKitPlugin] class emulates a events storage 
+ * @apidoc[PersistenceTestKitPlugin] class emulates an events storage 
  * @apidoc[PersistenceTestKitSnapshotPlugin] class emulates a snapshots storage
 
 **Note!** The corresponding plugins **must** be configured in the actor system which is used to initialize the particular testkit class:
@@ -91,7 +91,7 @@ Scala
 Java
 :  @@snip [Configuration.java](/akka-docs/src/test/java/jdocs/persistence/testkit/Configuration.java) { #snapshot-typed-conf }
 
-A typical scenario is to create a persistent actor, send commands to it and check that it persists events as it is expected:
+A typical scenario is to create a persistent actor, send commands to it and check that it persists events as expected:
 
 Scala
 :  @@snip [TestKitExamples.scala](/akka-docs/src/test/scala/docs/persistence/testkit/TestKitExamples.scala) { #test }
@@ -99,9 +99,9 @@ Scala
 Java
 :  @@snip [PersistenceTestKitSampleTest.java](/akka-docs/src/test/java/jdocs/persistence/testkit/PersistenceTestKitSampleTest.java) { #test }
 
-You can safely use persistence testkit in combination with main akka testkit.
+You can safely use persistence testkit in combination with the main akka testkit.
 
-The main methods of the api allow to (see @apidoc[PersistenceTestKit] and @apidoc[SnapshotTestKit] for more details):
+The main methods of the api allow one to (see @apidoc[PersistenceTestKit] and @apidoc[SnapshotTestKit] for more details):
 
  * check if the given event/snapshot object is the next persisted in the storage.
  * read a sequence of persisted events/snapshots.
@@ -111,15 +111,15 @@ The main methods of the api allow to (see @apidoc[PersistenceTestKit] and @apido
  * reject the events, but not snapshots (rejections are not supported for snapshots in the original api).
  * set your own [policy](#setting-your-own-policy-for-the-storage) which emulates the work of the storage. 
 Policy determines what to do when persistence needs to execute some operation on the storage (i.e. read, delete, etc.).
- * get all the events/snapshots persisted in the storage
- * put the events/snapshots in the storage to test recovery
+ * get all the events/snapshots persisted in the storage.
+ * put the events/snapshots in the storage to test recovery.
  
 #### Setting your own policy for the storage
 
 You can implement and set your own policy for the storage to control its actions on particular operations, for example you can fail or reject events on your own conditions.
 Implement the @apidoc[ProcessingPolicy[EventStorage.JournalOperation]] @scala[trait]@java[interface] for event storage
 or @apidoc[ProcessingPolicy[SnapshotStorage.SnapshotOperation]] @scala[trait]@java[interface] for snapshot storage,
-and set it with `withPolicy()` method.
+and set it with the `withPolicy()` method.
 
 Scala
 :  @@snip [TestKitExamples.scala](/akka-docs/src/test/scala/docs/persistence/testkit/TestKitExamples.scala) { #policy-test }
@@ -127,14 +127,14 @@ Scala
 Java
 :  @@snip [PersistenceTestKitPolicySampleTest.java](/akka-docs/src/test/java/jdocs/persistence/testkit/PersistenceTestKitPolicySampleTest.java) { #policy-test }
 
-`tryProcess()` method of the @apidoc[ProcessingPolicy] has two arguments: persistence id and the storage operation. 
+The `tryProcess()` method of the @apidoc[ProcessingPolicy] has two arguments: persistence id and the storage operation. 
 
 Event storage has the following operations:
 
  * @apidoc[ReadEvents] Read the events from the storage.
  * @apidoc[WriteEvents] Write the events to the storage.
  * @apidoc[DeleteEvents] Delete the events from the storage.
- * @apidoc[ReadSeqNum] Read the highest sequence number for particular persistence id.
+ * @apidoc[ReadSeqNum] Read the highest sequence number for a particular persistence id.
 
 Snapshot storage has the following operations:
 
@@ -183,7 +183,7 @@ For tests that involve more than one Cluster node you have to use another journa
 While it's possible to use the @ref:[Persistence Plugin Proxy](../persistence-plugins.md#persistence-plugin-proxy)
 it's often better and more realistic to use a real database.
 
-The @ref:[CQRS example](../project/examples.md#cqrs) includes tests that are using Akka Persistence Cassandra.
+The @ref:[CQRS example](../project/examples.md#cqrs) includes tests that use Akka Persistence Cassandra.
 
 ### Plugin initialization
 
