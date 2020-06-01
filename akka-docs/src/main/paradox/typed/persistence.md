@@ -65,7 +65,7 @@ actors may also process commands that do not change application state such as qu
 
 ## Example and core API
 
-Let's start with a simple example. The minimum required for a @apidoc[EventSourcedBehavior] is:
+Let's start with a simple example. The minimum required for @apidoc[EventSourcedBehavior] is:
 
 Scala
 :  @@snip [BasicPersistentBehaviorCompileOnly.scala](/akka-persistence-typed/src/test/scala/docs/akka/persistence/typed/BasicPersistentBehaviorCompileOnly.scala) { #structure }
@@ -80,7 +80,7 @@ The components that make up an `EventSourcedBehavior` are:
 
 * `persistenceId` is the stable unique identifier for the persistent actor.
 * `emptyState` defines the `State` when the entity is first created e.g. a Counter would start with 0 as state.
-* `commandHandler` defines how to handle command by producing Effects e.g. persisting events, stopping the persistent actor.
+* `commandHandler` defines how to handle a command by producing Effects e.g. persisting events, stopping the persistent actor.
 * `eventHandler` returns the new state given the current state when an event has been persisted.
 
 @@@ div { .group-java }
@@ -107,7 +107,7 @@ be unique enough to be used as the `PersistenceId` by itself. For example two di
 entities may have the same `entityId`. To create a unique `PersistenceId` the `entityId` should be prefixed
 with a stable name of the entity type, which typically is the same as the `EntityTypeKey.name` that
 is used in Cluster Sharding. There are @scala[`PersistenceId.apply`]@java[`PersistenceId.of`] factory methods
-to help with constructing such `PersistenceId` from an `entityTypeHint` and `entityId`.
+to help with constructing such a `PersistenceId` from an `entityTypeHint` and `entityId`.
 
 The default separator when concatenating the `entityTypeHint` and `entityId` is `|`, but a custom separator
 is supported.
